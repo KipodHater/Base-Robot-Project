@@ -2,30 +2,30 @@ package frc.robot;
 
 public class Constants {
     public class pivotConstants{
-        public static final int PIVOT_MOTOR_ID = 15;
+        public static final int PIVOT_MOTOR_ID = 15; // no units
 
-        public static final double PIVOT_MOTOR_KP = 0.01;
-        public static final double PIVOT_MOTOR_KI = 0.00;
-        public static final double PIVOT_MOTOR_KD = 0.05;
+        public static final double PIVOT_MOTOR_KP = 0.01; // no units
+        public static final double PIVOT_MOTOR_KI = 0.00; // no units
+        public static final double PIVOT_MOTOR_KD = 0.05; // no units
 
-        public static final double PIVOT_MOTOR_KS = 0.17;
-        public static final double PIVOT_MOTOR_KG = 3.11;
-        public static final double PIVOT_MOTOR_KV = 0.00;
+        public static final double PIVOT_MOTOR_KS = 0.17; // no units
+        public static final double PIVOT_MOTOR_KG = 3.11; // no units
+        public static final double PIVOT_MOTOR_KV = 0.00; //no units
 
-        public static final double PIVOT_MOTOR_MAX_SPEED = 3;//m/s
-        public static final double PIVOT_MOTOR_MAX_ACCELERATION = 3;//m/s^2
+        public static final double PIVOT_MOTOR_MAX_SPEED = 3; //m/s
+        public static final double PIVOT_MOTOR_MAX_ACCELERATION = 3; //m/s^2
 
-        public static final double PIVOT_MOTOR_ENCODER_OFFSET = 355.0;
+        public static final double PIVOT_MOTOR_ENCODER_OFFSET = 355.0; // deg
 
-        public static final double PIVOT_MOTOR_MAX_ANGLE = 70.0;
-        public static final double PIVOT_MOTOR_MIN_ANGLE = 5.0;
+        public static final double PIVOT_MOTOR_MAX_ANGLE = 70.0; // deg
+        public static final double PIVOT_MOTOR_MIN_ANGLE = 5.0; // deg
     }
 
     public class shooterConstants{
         public static final int HIGH_SHOOTER_MOTOR_ID = 25;
         public static final int LOW_SHOOTER_MOTOR_ID = 26;
 
-        public static final double LOW_SHOOTER_ROLLER_PERIMETER = 0.32;//not updated!
+        public static final double LOW_SHOOTER_ROLLER_PERIMETER = 0.32;
         public static final double HIGH_SHOOTER_ROLLER_PERIMETER = 0.32;//not accurate
     }
 
