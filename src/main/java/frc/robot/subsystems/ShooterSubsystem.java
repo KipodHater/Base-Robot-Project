@@ -53,6 +53,9 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  public Command intakingCommand(){
+    return runEnd(()->setBangBangSpeed(-0.25, -0.25), () -> stopShooterMotors());
+  }
 
   public Command shootingCommand(double desiredHighVelocity, double desiredLowVelocity){ //velocities in m/s!!!!
     return new RunCommand(() -> setBangBangSpeed(desiredHighVelocity, desiredLowVelocity), this);
