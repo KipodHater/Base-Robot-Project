@@ -9,8 +9,13 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.swerveContants.*;
+
+import java.util.function.DoubleSupplier;
 public class SwerveSubsystem extends SubsystemBase {
   /** Creates a new SwerveSubsystem. */
   private final TalonFX frontRightDriveMotor;
@@ -34,6 +39,8 @@ public class SwerveSubsystem extends SubsystemBase {
   private final SwerveDriveKinematics m_kinematics;
 
   private ChassisSpeeds speed;
+
+  private SwerveModuleState[] moduleState;
 
   public SwerveSubsystem() {
     frontRightDriveMotor = new TalonFX(FRONT_RIGHT_DRIVE_MOTOR_ID);
@@ -62,4 +69,10 @@ public class SwerveSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public Command manualDriveCommand(DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier angularSpeed){
+    
+  }
+
+  private 
 }
