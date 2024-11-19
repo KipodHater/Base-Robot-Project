@@ -30,24 +30,18 @@ public class Constants {
     }
 
     public static final class swerveContants{
-        public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 1;
-        public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 1;
-        
-        public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 2;
-        public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
 
-        public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 3;
-        public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 3;
 
-        public static final int BACK_LEFT_DRIVE_MOTOR_ID = 4;
-        public static final int BACK_LEFT_ANGLE_MOTOR_ID = 4;
-
-        public static final double DISTANCE_FROM_CENTER = 0.251;//m
     }
     public static final class swerveModuleConstants{
-        public static final double SWERVE_ROTATION_KP = 0.5;
-        public static final double SWERVE_ROTATION_KI = 0.5;
-        public static final double SWERVE_ROTATION_KD = 0.5;
+        public static final double SWERVE_ROTATION_KP = 1.0;
+        public static final double SWERVE_ROTATION_KI = 0.0;
+        public static final double SWERVE_ROTATION_KD = 0.0;
+
+        public static final double ANGLE_GEAR_RATIO = (396.0/35.0)/1.0;
+
+        public static final double TRACK_WIDTH = 0.596;
+        public static final double WHEELBASE = 0.596;
     }
 
 }
