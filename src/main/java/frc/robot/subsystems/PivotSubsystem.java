@@ -28,7 +28,7 @@ public class PivotSubsystem extends SubsystemBase {
   private final CANSparkMax pivotMotor;
   private final ProfiledPIDController pivotPIDController;
   private final ElevatorFeedforward pivotFeedforwardController;
-  private AbsoluteEncoder pivotAbsoluteEncoder;
+  private final AbsoluteEncoder pivotAbsoluteEncoder;
 
   public PivotSubsystem() {
     pivotMotor = new CANSparkMax(PIVOT_MOTOR_ID, com.revrobotics.CANSparkLowLevel.MotorType.kBrushless);

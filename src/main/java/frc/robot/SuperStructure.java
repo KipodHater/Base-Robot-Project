@@ -30,6 +30,5 @@ public class SuperStructure {
     }
     // public Command shootingSequence(double pivotAngle, double shootingSpeed){
     //     return pivot.setPivotPosition(pivotAngle).alongwith(shooter.setHighShooterSpeed(shootingSpeed)).racewith(2)
-
     // }
 }

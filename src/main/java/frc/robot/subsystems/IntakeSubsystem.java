@@ -4,14 +4,23 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.networktables.DoubleSubscriber;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
-  public IntakeSubsystem() {}
+  public IntakeSubsystem() {
+
+
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
 }

@@ -16,4 +16,6 @@ public interface DriverControllerInterface {
     public DoubleSupplier getYSpeed();
 
     public DoubleSupplier getAngularSpeed();
+
+    public Trigger getResetGyroButton();
 }

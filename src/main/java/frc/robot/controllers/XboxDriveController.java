@@ -36,5 +36,8 @@ public class XboxDriveController implements DriverControllerInterface {
         return (() -> controller.getRawAxis(0));
     }
 
-
+    @Override
+    public Trigger getResetGyroButton(){
+        return new Trigger(() -> controller.getRawButton(3));
+    }
 }

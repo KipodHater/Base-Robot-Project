@@ -18,10 +18,12 @@ public class RobotContainer {
 
 
   public void periodic(){
+    // puts things on the dashboard
       SmartDashboard.putNumber("Desired Angle", SmartDashboard.getNumber("Desired Angle", 30));
       SmartDashboard.putNumber("Desired Speed", SmartDashboard.getNumber("Desired Speed", 0));
   }
   private void configureBindings() {
+    // important!!! adds to each trigger the thing it is supposed to do
     controller.getPivotTrigger()
       .onTrue(structure.setPivotAngle(SmartDashboard.getNumber("Desired Angle", 30)));
     controller.getShootingTrigger()

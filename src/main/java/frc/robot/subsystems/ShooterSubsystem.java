@@ -66,6 +66,7 @@ public class ShooterSubsystem extends SubsystemBase {
       () -> setBangBangSpeed(desiredVelocity, desiredVelocity),
       this);
   }
+  
   public Command shootingCommand(){
     return new RunCommand(() -> stopShooterMotors(), this);
   }
