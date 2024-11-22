@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 public class Constants {
     public static final class pivotConstants{
         public static final int PIVOT_MOTOR_ID = 15; // no units
@@ -30,8 +32,38 @@ public class Constants {
     }
 
     public static final class swerveContants{
+        public static final int FRONT_LEFT_DRIVE_MOTOR_ID = ;
+        public static final int FRONT_LEFT_ANGLE_MOTOR_ID = ;
+        public static final boolean FRONT_LEFT_DRIVE_ENCODER_REVERSED = ;
+        public static final boolean FRONT_LEFT_TURNING_ENCODER_REVERSED = ;
+        public static final int FRONT_LEFT_DRIVE_ABSOLUTE_ENODER_ID = ;
+        public static final double FRONT_LEFT_DRIVE_ABSOLUTE_ENCODER_OFFSET = ;
+        public static final boolean FRONT_LEFT_DRIVE_ABSOLUTE_ENCODER_REVERSED = ;
 
+        public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = ;
+        public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = ;
+        public static final boolean FRONT_RIGHT_DRIVE_ENCODER_REVERSED = ;
+        public static final boolean FRONT_RIGHT_TURNING_ENCODER_REVERSED = ;
+        public static final int FRONT_RIGHT_DRIVE_ABSOLUTE_ENODER_ID = ;
+        public static final double FRONT_RIGHT_DRIVE_ABSOLUTE_ENCODER_OFFSET = ;
+        public static final boolean FRONT_RIGHT_DRIVE_ABSOLUTE_ENCODER_REVERSED = ;
 
+        public static final int BACK_LEFT_DRIVE_MOTOR_ID = ;
+        public static final int BACK_LEFT_ANGLE_MOTOR_ID = ;
+        public static final boolean BACK_LEFT_DRIVE_ENCODER_REVERSED = ;
+        public static final boolean BACK_LEFT_TURNING_ENCODER_REVERSED = ;
+        public static final int BACK_LEFT_DRIVE_ABSOLUTE_ENODER_ID = ;
+        public static final double BACK_LEFT_DRIVE_ABSOLUTE_ENCODER_OFFSET = ;
+        public static final boolean BACK_LEFT_DRIVE_ABSOLUTE_ENCODER_REVERSED = ;
+
+        public static final int BACK_RIGHT_DRIVE_MOTOR_ID = ;
+        public static final int BACK_RIGHT_ANGLE_MOTOR_ID = ;
+        public static final boolean BACK_RIGHT_DRIVE_ENCODER_REVERSED = ;
+        public static final boolean BACK_RIGHT_TURNING_ENCODER_REVERSED = ;
+        public static final int BACK_RIGHT_DRIVE_ABSOLUTE_ENODER_ID = ;
+        public static final double BACK_RIGHT_DRIVE_ABSOLUTE_ENCODER_OFFSET = ;
+        public static final boolean BACK_RIGHT_DRIVE_ABSOLUTE_ENCODER_REVERSED = ;
+        
     }
     public static final class swerveModuleConstants{
         public static final double SWERVE_ROTATION_KP = 1.0;
@@ -44,4 +76,19 @@ public class Constants {
         public static final double WHEELBASE = 0.596;
     }
 
+    public static final class ctreConstants{
+        public static final double SWERVE_ANGLE_MOTOR_KP = 0.0;
+        public static final double SWERVE_ANGLE_MOTOR_KI = 0.0;
+        public static final double SWERVE_ANGLE_MOTOR_KD = 0.0;
+        public static final double SWERVE_ANGLE_MOTOR_KA = 0.0;
+        public static final double SWERVE_ANGLE_MOTOR_KG = 0.0;
+        public static final double SWERVE_ANGLE_MOTOR_KS = 0.0;
+        public static final double SWERVE_ANGLE_MOTOR_KV = 0.0;
+
+        public static final boolean ANGLE_MOTOR_INVERTED = false;
+        public static final NeutralModeValue ANGLE_MOTOR_NEUTRAL_MODE = NeutralModeValue.Coast;
+        public static final NeutralModeValue DRIVE_MOTOR_NEUTRAL_MODE = NeutralModeValue.Brake;
+
+        
+    }
 }
