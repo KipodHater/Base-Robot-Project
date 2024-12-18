@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.lib.util;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -28,6 +28,9 @@ public class NavxGyro extends AHRS{
         gyro.setAngleAdjustment(offsetAngle);
     }
 
-
+    public void setGyroAngle(double angle){
+        gyro.reset();
+        gyro.setAngleAdjustment(angle);
+    }
 }
 

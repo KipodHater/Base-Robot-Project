@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
+import frc.lib.util.NavxGyro;
 import frc.robot.Constants;
-import frc.robot.NavxGyro;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -37,10 +37,9 @@ import static frc.robot.Constants.Swerve.*;
 public class SwerveSubsystem extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
-    public AHRS gyro;
+    public NavxGyro gyro;
 
     private ChassisSpeeds currChassisSpeeds;
-    private PIDController rotationPIDController;
 
     public SwerveSubsystem() {
         gyro = new NavxGyro();
@@ -226,5 +225,8 @@ public class SwerveSubsystem extends SubsystemBase {
                 ,
                 true,
                 true);
+    }
+    public void updateAngle(double desiredAngle){
+        gyro.setGyroAngle(desiredAngle);
     }
 }
