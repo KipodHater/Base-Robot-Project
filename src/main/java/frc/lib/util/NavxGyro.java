@@ -28,9 +28,6 @@ public class NavxGyro extends AHRS{
         gyro.setAngleAdjustment(offsetAngle);
     }
 
-    public void setGyroAngle(double angle){
-        gyro.reset();
-        gyro.setAngleAdjustment(angle);
-    }
+
 }
 

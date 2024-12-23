@@ -1,4 +1,4 @@
-package frc.lib.util;
+package frc.robot.subsystems.sweveSubsystem;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;

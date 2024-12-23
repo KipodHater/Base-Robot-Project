@@ -1,4 +1,4 @@
-package frc.lib.util;
+package frc.robot.subsystems.sweveSubsystem;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -10,7 +10,9 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
+import frc.lib.util.SwerveModuleConstants;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
 
@@ -78,7 +80,8 @@ public class SwerveModule {
     public void resetToAbsolute(){
         double absolutePosition = getCANcoder().getRotations() - angleOffset.getRotations();
         System.out.println(angleOffset.getRotations() + " and " + getCANcoder().getRotations());
-        System.out.println(absolutePosition);
+        // System.out.println(absolutePosition);
+        SmartDashboard.putNumber("module absolute position:", absolutePosition);
         System.out.println(mAngleMotor.setPosition(absolutePosition));
         System.out.println(mAngleMotor.getPosition());
     }

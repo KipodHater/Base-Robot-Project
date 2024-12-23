@@ -1,7 +1,6 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.sweveSubsystem;
 
 import frc.lib.util.NavxGyro;
-import frc.lib.util.SwerveModule;
 import frc.robot.Constants;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -41,9 +40,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
     private ChassisSpeeds currChassisSpeeds;
 
+
     public SwerveSubsystem() {
         gyro = new NavxGyro();
-
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
                 new SwerveModule(1, Constants.Swerve.Mod1.constants),
@@ -51,7 +50,7 @@ public class SwerveSubsystem extends SubsystemBase {
                 new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
 
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, gyro.getGyroRotationYaw(), getModulePositions());
         AutoBuilder.configureHolonomic(
                 this::getPose, // Robot pose supplier
                 this::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -165,7 +164,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void setPose(Pose2d pose) {
-        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
+        swerveOdometry.resetPosition(gyro.getGyroRotationYaw(), getModulePositions(), pose);
     }
 
     public Rotation2d getHeading() {
@@ -173,17 +172,13 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void setHeading(Rotation2d heading) {
-        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(),
+        swerveOdometry.resetPosition(gyro.getGyroRotationYaw(), getModulePositions(),
                 new Pose2d(getPose().getTranslation(), heading));
     }
 
     public void zeroHeading() {
-        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(),
+        swerveOdometry.resetPosition(gyro.getGyroRotationYaw(), getModulePositions(),
                 new Pose2d(getPose().getTranslation(), new Rotation2d()));
-    }
-
-    public Rotation2d getGyroYaw() {
-        return Rotation2d.fromDegrees(-(double) gyro.getYaw());
     }
 
     public void resetModulesToAbsolute() {
@@ -195,7 +190,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        swerveOdometry.update(getGyroYaw(), getModulePositions());
+        swerveOdometry.update(gyro.getGyroRotationYaw(), getModulePositions());
 
         for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
@@ -204,7 +199,7 @@ public class SwerveSubsystem extends SubsystemBase {
         }
 
         //System.out.println(getRobotOrientationForSpeaker());
-        // System.out.println(mSwerveMods[4].getPosition());
+        // System.out.println(mSwerveMods[4].getState());
     }
 
     public ChassisSpeeds getCurrentSpeeds() {
@@ -215,18 +210,5 @@ public class SwerveSubsystem extends SubsystemBase {
         double robotsOrientation = Math.signum(
             MathUtil.applyDeadband(getPose().getRotation().getDegrees(), 25));
         return robotsOrientation;
-    }
-
-    public void rotateRobot(double rotationSpeed){
-        drive(new Translation2d(
-                MathUtil.applyDeadband(0, STICK_DEADBAND),
-                MathUtil.applyDeadband(0, STICK_DEADBAND)).times(MAX_SPEED),
-                MathUtil.applyDeadband(rotationSpeed, STICK_DEADBAND) * MAX_ANGULAR_VELOCITY
-                ,
-                true,
-                true);
-    }
-    public void updateAngle(double desiredAngle){
-        gyro.setGyroAngle(desiredAngle);
     }
 }
