@@ -4,10 +4,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 public interface FlywheelMotorIO {
 
-    enum motorNeutralMode{
-        Brake,
-        Coast
-    }
+    // enum motorNeutralMode{
+    //     Brake,
+    //     Coast
+    // }
 
     // enum motorMode{
     //     ClosedLoop,
@@ -28,7 +28,7 @@ public interface FlywheelMotorIO {
 
     public void setFeedforwardCoefficients(double kS, double kV, double kA);
     
-    public void setNeutralMode(motorNeutralMode neutralMode);
+    public void setNeutralMode(boolean neutralModeCoast);
     
     public default void updateInputs(MotorIOInputs inputs){}
 

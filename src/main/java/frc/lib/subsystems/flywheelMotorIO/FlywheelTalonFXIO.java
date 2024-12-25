@@ -17,6 +17,7 @@ public class FlywheelTalonFXIO implements FlywheelMotorIO {
     private final DutyCycleOut driveDutyCycle;
 
     public FlywheelTalonFXIO(int motorPort, double wheelDiameter, String motorNameLocator,
+    /*for example "shooter/upperFlywheelMotor */
             double kMaxSpeedMetersPerSecond) {
         maxSpeed = kMaxSpeedMetersPerSecond;
         isOpenLoopGlobal = false;
@@ -59,11 +60,11 @@ public class FlywheelTalonFXIO implements FlywheelMotorIO {
     }
 
     @Override
-    public void setNeutralMode(motorNeutralMode neutralMode) {
-        if (neutralMode == motorNeutralMode.Brake)
-            flywheelTalonFXMotor.setNeutralMode(NeutralModeValue.Brake);
-        else
+    public void setNeutralMode(boolean neutralModeCoast) {
+        if (neutralModeCoast)
             flywheelTalonFXMotor.setNeutralMode(NeutralModeValue.Coast);
+        else
+            flywheelTalonFXMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
     @Override

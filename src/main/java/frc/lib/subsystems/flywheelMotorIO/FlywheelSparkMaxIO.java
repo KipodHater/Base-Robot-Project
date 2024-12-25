@@ -55,8 +55,8 @@ public class FlywheelSparkMaxIO implements FlywheelMotorIO {
     }
 
     @Override
-    public void setNeutralMode(motorNeutralMode neutralMode) {
-        if (neutralMode == motorNeutralMode.Coast) {
+    public void setNeutralMode(boolean neutralModeCoast) {
+        if (neutralModeCoast) {
             sparkMaxMotor.setIdleMode(IdleMode.kCoast);
         } else {
             sparkMaxMotor.setIdleMode(IdleMode.kBrake);
