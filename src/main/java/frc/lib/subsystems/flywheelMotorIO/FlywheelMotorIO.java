@@ -9,10 +9,10 @@ public interface FlywheelMotorIO {
         Coast
     }
 
-    enum motorMode{
-        ClosedLoop,
-        PIDControl
-    }
+    // enum motorMode{
+    //     ClosedLoop,
+    //     PIDControl
+    // }
     public static class MotorIOInputs{
         double motorUnitsPerSecond = 0.0;
         double motorPosition = 0.0;
@@ -24,7 +24,7 @@ public interface FlywheelMotorIO {
 
     public void invertMotor(boolean isInverted);
 
-    public void setPIDCoefficients(double kp, double ki, double kd, double kIzone, double kFeedForwardConstant, double kMinOutput, double kMaxOutput);
+    public void setPIDCoefficients(double kp, double ki, double kd/*, double kIzone, double kFeedForwardConstant, double kMinOutput, double kMaxOutput*/);
 
     public void setFeedforwardCoefficients(double kS, double kV, double kA);
     
@@ -36,7 +36,9 @@ public interface FlywheelMotorIO {
 
     public double getVelocityMPS();
 
-    public void setMotorClosedLoop(motorMode desiredMotorMode);
+    public void setMotorLoopMode(boolean isOpenLoop);
 
     public void stopMotor();
+
+    public void periodic();
 }
