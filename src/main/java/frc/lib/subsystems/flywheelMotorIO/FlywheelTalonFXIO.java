@@ -15,6 +15,7 @@ public class FlywheelTalonFXIO implements FlywheelMotorIO {
     private boolean isOpenLoopGlobal;
     private final double maxSpeed;
     private final DutyCycleOut driveDutyCycle;
+    private final TalonFXConfiguration talonFXConfigs;
 
     public FlywheelTalonFXIO(int motorPort, double wheelDiameter, String motorNameLocator,
     /*for example "shooter/upperFlywheelMotor */
@@ -23,7 +24,8 @@ public class FlywheelTalonFXIO implements FlywheelMotorIO {
         isOpenLoopGlobal = false;
         flywheelWheelDiameter = wheelDiameter;
         flywheelTalonFXMotor = new TalonFX(motorPort);
-        flywheelTalonFXMotor.getConfigurator().apply(new TalonFXConfiguration());
+        talonFXConfigs = new TalonFXConfiguration();
+        flywheelTalonFXMotor.getConfigurator().apply(talonFXConfigs);
         // flywheelTalonFXMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         driveDutyCycle = new DutyCycleOut(0);
     }
@@ -38,25 +40,26 @@ public class FlywheelTalonFXIO implements FlywheelMotorIO {
                                                                    * , double kIzone, double kFeedForwardConstant,
                                                                    * double kMinOutput, double kMaxOutput
                                                                    */) {
-        var talonFXConfig = new TalonFXConfiguration();
-        var slot0Configs = talonFXConfig.Slot0;
+
+        var slot0Configs = talonFXConfigs.Slot0;
 
         slot0Configs.kP = kp;
         slot0Configs.kI = ki;
         slot0Configs.kD = kd;
 
-        flywheelTalonFXMotor.getConfigurator().apply(talonFXConfig, 0.050);
+        flywheelTalonFXMotor.getConfigurator().apply(talonFXConfigs, 0.050);
     }
 
     @Override
     public void setFeedforwardCoefficients(double kS, double kV, double kA) {
-        var talonFXConfig = new TalonFXConfiguration();
-        var slot0Configs = talonFXConfig.Slot0;
+        var slot0Configs = talonFXConfigs.Slot0;
 
         slot0Configs.kS = kS;
         slot0Configs.kV = kV;
         slot0Configs.kA = kA;
         slot0Configs.kG = 0;
+
+        flywheelTalonFXMotor.getConfigurator().apply(talonFXConfigs, 0.050);
     }
 
     @Override
