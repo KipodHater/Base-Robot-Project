@@ -1,9 +1,13 @@
 package frc.lib.subsystems.flywheelMotorIO;
 
+import static frc.lib.math.Conversions.RPSToMPS;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkBase.ControlType;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
@@ -51,5 +55,32 @@ public class FlywheelTalonSRXIO implements FlywheelMotorIO {
             flywheelTalonSRXMotor.setNeutralMode(NeutralMode.Brake);
     }
 
-    public void setVelocityMPS(double velocitySetpoint)
+    @Override
+    public void setVelocityMPS(double velocitySetpoint) {
+        if (!isOpenLoopGlobal) {
+            double wantedRPM = RPSToMPS(velocitySetpoint / 60.0, flywheelWheelDiameter * Math.PI);
+            double velocityRadPerSec = wantedRPM * (2 * Math.PI) / 60.0;
+            double feedForwardVoltage = feedForwardController.calculate(velocityRadPerSec); // feedforward gets speed in
+                                                                                            // rad/s
+            flywheelTalonSRXMotor.set(TalonSRXControlMode.Velocity, feedForwardVoltage);
+        } else {
+            flywheelTalonSRXMotor.set(TalonSRXControlMode.PercentOutput, velocitySetpoint / maxSpeed);
+        }
+    }
+
+    @Override
+    public double getVelocityMPS(){
+        return RPSToMPS(flywheelTalonSRXMotor.getSelectedSensorVelocity() / 60.0, flywheelWheelDiameter * Math.PI);
+    }
+
+    
+    @Override
+    public void setMotorLoopMode(boolean isOpenLoop) {
+        isOpenLoopGlobal = isOpenLoop;
+    }
+
+    @Override
+    public void stopMotor(){
+        flywheelTalonSRXMotor.set(TalonSRXControlMode.PercentOutput, 0);
+    }
 }

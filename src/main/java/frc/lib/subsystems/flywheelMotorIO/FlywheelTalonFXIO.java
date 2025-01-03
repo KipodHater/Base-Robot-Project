@@ -95,6 +95,6 @@ public class FlywheelTalonFXIO implements FlywheelMotorIO {
         flywheelTalonFXMotor.set(0);
     }
 
-    @Override
-    public void periodic(){}
+    // @Override
+    // public void periodic(){}
 }

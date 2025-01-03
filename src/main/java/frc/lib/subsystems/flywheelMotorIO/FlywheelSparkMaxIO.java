@@ -92,8 +92,8 @@ public class FlywheelSparkMaxIO implements FlywheelMotorIO {
         sparkMaxMotor.set(0);
     }
 
-    @Override
-    public void periodic() {
+    // @Override
+    // public void periodic() {
 
-    }
+    // }
 }
