@@ -2,14 +2,17 @@ package frc.lib.subsystems.flywheelMotorIO;
 
 import static frc.lib.math.Conversions.RPSToMPS;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.CANSparkBase.ControlType;
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.VelocityDutyCycle;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 
 public class FlywheelTalonSRXIO implements FlywheelMotorIO {
 
@@ -18,6 +21,8 @@ public class FlywheelTalonSRXIO implements FlywheelMotorIO {
     private final double maxSpeed;
     private final double flywheelWheelDiameter;
     private SimpleMotorFeedforward feedForwardController;
+    private VelocityDutyCycle velocityControl;
+    private final DutyCycleOut driveDutyCycle;
 
     public FlywheelTalonSRXIO(int motorPort, double wheelDiameter, String motorNameLocator,
             /* for example "shooter/upperFlywheelMotor */
@@ -28,6 +33,7 @@ public class FlywheelTalonSRXIO implements FlywheelMotorIO {
         flywheelWheelDiameter = wheelDiameter;
         isOpenLoopGlobal = true;
         maxSpeed = kMaxSpeedMetersPerSecond;
+        driveDutyCycle = new DutyCycleOut(0);
     }
 
     @Override
@@ -55,32 +61,35 @@ public class FlywheelTalonSRXIO implements FlywheelMotorIO {
             flywheelTalonSRXMotor.setNeutralMode(NeutralMode.Brake);
     }
 
-    @Override
     public void setVelocityMPS(double velocitySetpoint) {
         if (!isOpenLoopGlobal) {
             double wantedRPM = RPSToMPS(velocitySetpoint / 60.0, flywheelWheelDiameter * Math.PI);
-            double velocityRadPerSec = wantedRPM * (2 * Math.PI) / 60.0;
-            double feedForwardVoltage = feedForwardController.calculate(velocityRadPerSec); // feedforward gets speed in
-                                                                                            // rad/s
-            flywheelTalonSRXMotor.set(TalonSRXControlMode.Velocity, feedForwardVoltage);
+            velocityControl = new VelocityDutyCycle(wantedRPM);
+            flywheelTalonSRXMotor.set(TalonSRXControlMode.Velocity, wantedRPM);;
         } else {
-            flywheelTalonSRXMotor.set(TalonSRXControlMode.PercentOutput, velocitySetpoint / maxSpeed);
+            driveDutyCycle.Output = velocitySetpoint / maxSpeed;
+            flywheelTalonSRXMotor.set(ControlMode.Velocity, driveDutyCycle.Output);
         }
     }
 
+
     @Override
-    public double getVelocityMPS(){
-        return RPSToMPS(flywheelTalonSRXMotor.getSelectedSensorVelocity() / 60.0, flywheelWheelDiameter * Math.PI);
+    public double getVelocityMPS() {
+        return RPSToMPS( flywheelTalonSRXMotor.getSelectedSensorVelocity()/4096 / 60.0, flywheelWheelDiameter * Math.PI);
     }
 
-    
     @Override
     public void setMotorLoopMode(boolean isOpenLoop) {
         isOpenLoopGlobal = isOpenLoop;
     }
 
     @Override
-    public void stopMotor(){
-        flywheelTalonSRXMotor.set(TalonSRXControlMode.PercentOutput, 0);
+    public void stopMotor() {
+        flywheelTalonSRXMotor.set(ControlMode.Velocity, 0);
+    }
+
+    @Override
+    public void periodic() {
+        
     }
 }
