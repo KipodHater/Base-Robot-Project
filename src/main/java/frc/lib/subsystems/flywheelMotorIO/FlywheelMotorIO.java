@@ -4,6 +4,15 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 public interface FlywheelMotorIO {
 
+    // enum motorNeutralMode{
+    //     Brake,
+    //     Coast
+    // }
+
+    // enum motorMode{
+    //     ClosedLoop,
+    //     PIDControl
+    // }
     public static class MotorIOInputs{
         double motorUnitsPerSecond = 0.0;
         double motorPosition = 0.0;
@@ -31,5 +40,5 @@ public interface FlywheelMotorIO {
 
     public void stopMotor();
 
-    public default void periodic(){}
+    public void periodic();
 }
