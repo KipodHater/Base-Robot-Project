@@ -4,8 +4,12 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.math.MathUtil;
+
 import static frc.lib.math.Conversions.*;
 
 public class FlywheelTalonFXIO implements FlywheelMotorIO {
@@ -71,15 +75,30 @@ public class FlywheelTalonFXIO implements FlywheelMotorIO {
     }
 
     @Override
-    public void setVelocityMPS(double velocitySetpoint) {
+    public void set(double percentIn) {
 
-        if (!isOpenLoopGlobal) {
-            double wantedRPM = RPSToMPS(velocitySetpoint / 60.0, flywheelWheelDiameter * Math.PI);
-            velocityControl = new VelocityDutyCycle(wantedRPM);
-            flywheelTalonFXMotor.setControl(velocityControl);
-        } else {
-            driveDutyCycle.Output = velocitySetpoint / maxSpeed;
-            flywheelTalonFXMotor.setControl(driveDutyCycle);
+        flywheelTalonFXMotor.set(MathUtil.clamp(percentIn, -1, 1));
+    }
+
+    @Override
+    public void set(InputType type, double input) {
+        switch(type){
+            case MPS:
+                if (!isOpenLoopGlobal) {
+                    double wantedRPM = RPSToMPS(input / 60.0, flywheelWheelDiameter * Math.PI);
+                    velocityControl = new VelocityDutyCycle(wantedRPM);
+                    flywheelTalonFXMotor.setControl(velocityControl);
+                } else {
+                    driveDutyCycle.Output = input / maxSpeed;
+                    flywheelTalonFXMotor.setControl(driveDutyCycle);
+            }
+            case Percent:
+                set(input);
+            case Voltage:
+                VoltageOut voltage = new VoltageOut(MathUtil.clamp(input, 0, 12)); 
+                flywheelTalonFXMotor.setControl(voltage);
+            
+            
         }
     }
 

@@ -20,6 +20,13 @@ public interface FlywheelMotorIO {
         double motorCurrent = 0.0;
     }
 
+    public static enum InputType {
+        MPS,
+        Voltage,
+        Percent
+
+    }
+
     // public void initializeFlywheel();
 
     public void invertMotor(boolean isInverted);
@@ -32,7 +39,9 @@ public interface FlywheelMotorIO {
     
     public default void updateInputs(MotorIOInputs inputs){}
 
-    public void setVelocityMPS(double velocitySetpoint);
+    public void set(InputType type, double input);
+
+    public void set(double percentIn);
 
     public double getVelocityMPS();
 

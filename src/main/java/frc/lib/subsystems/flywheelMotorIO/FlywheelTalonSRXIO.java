@@ -61,17 +61,32 @@ public class FlywheelTalonSRXIO implements FlywheelMotorIO {
             flywheelTalonSRXMotor.setNeutralMode(NeutralMode.Brake);
     }
 
-    public void setVelocityMPS(double velocitySetpoint) {
-        if (!isOpenLoopGlobal) {
-            double wantedRPM = RPSToMPS(velocitySetpoint / 60.0, flywheelWheelDiameter * Math.PI);
+    @Override
+    public void set(double percentIn) {
+
+        flywheelTalonSRXMotor.set(TalonSRXControlMode.PercentOutput, percentIn);
+    }
+
+    @Override
+    public void set(InputType type, double input) {
+        switch (type) {
+            case MPS:
+                if (!isOpenLoopGlobal) {
+            double wantedRPM = RPSToMPS(input / 60.0, flywheelWheelDiameter * Math.PI);
             velocityControl = new VelocityDutyCycle(wantedRPM);
             flywheelTalonSRXMotor.set(TalonSRXControlMode.Velocity, wantedRPM);;
         } else {
-            driveDutyCycle.Output = velocitySetpoint / maxSpeed;
+            driveDutyCycle.Output = input / maxSpeed;
             flywheelTalonSRXMotor.set(ControlMode.Velocity, driveDutyCycle.Output);
         }
-    }
+            case Percent:
+                set(input);
+            case Voltage:
+                set(input*12);
+                //doenst really set voltage
 
+        }
+    }
 
     @Override
     public double getVelocityMPS() {

@@ -8,6 +8,8 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import static frc.lib.math.Conversions.*;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 public class FlywheelSparkMaxIO implements FlywheelMotorIO {
@@ -64,17 +66,29 @@ public class FlywheelSparkMaxIO implements FlywheelMotorIO {
     }
 
     @Override
-    public void setVelocityMPS(double velocitySetpoint) {
-        if(!isOpenLoopGlobal){
-        double wantedRPM = RPSToMPS(velocitySetpoint / 60.0, flywheelWheelDiameter * Math.PI);
-        double velocityRadPerSec = wantedRPM * (2 * Math.PI) / 60.0;
-        double feedForwardVoltage = feedForwardController.calculate(velocityRadPerSec); // feedforward gets speed in
-                                                                                        // rad/s
-        motorPIDController.setReference(wantedRPM, ControlType.kVelocity, 0, feedForwardVoltage);
-        } else{
-            sparkMaxMotor.set(velocitySetpoint/maxSpeed);
-        }
+    public void set(double percentIn) {
+        sparkMaxMotor.set(MathUtil.clamp(percentIn, -1, 1));
+    }
 
+    @Override
+    public void set(InputType type, double input) {
+        switch(type) {
+            case MPS:
+                if(!isOpenLoopGlobal){
+                    double wantedRPM = RPSToMPS(input / 60.0, flywheelWheelDiameter * Math.PI);
+                    double velocityRadPerSec = wantedRPM * (2 * Math.PI) / 60.0;
+                    double feedForwardVoltage = feedForwardController.calculate(velocityRadPerSec); // feedforward gets speed in
+                                                                                        // rad/s
+                    motorPIDController.setReference(wantedRPM, ControlType.kVelocity, 0, feedForwardVoltage);
+                } else {
+                    sparkMaxMotor.set(input/maxSpeed);
+            }
+
+            case Percent:
+                set(input);
+            case Voltage:
+                motorPIDController.setReference(MathUtil.clamp(input, 0, 12), ControlType.kVoltage,0);
+        }
     }
 
     @Override
@@ -96,4 +110,5 @@ public class FlywheelSparkMaxIO implements FlywheelMotorIO {
     public void periodic() {
 
     }
+
 }
